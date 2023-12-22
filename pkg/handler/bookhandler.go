@@ -114,6 +114,7 @@ func getBooksByCategoryHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, books)
 
 }
+
 func getBookByIdHandler(c *gin.Context) {
 	bookIDStr := c.Param("id")
 	bookID, err := strconv.Atoi(bookIDStr)
