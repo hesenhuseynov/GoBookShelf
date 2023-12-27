@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func getCategoriesHandler(c *gin.Context) {
+func GetCategoriesHandler(c *gin.Context) {
 	categories, err := service.GetAllCategoryService()
 	if err != nil {
 		logrus.WithFields(logrus.Fields{
@@ -27,7 +27,7 @@ func getCategoriesHandler(c *gin.Context) {
 
 }
 
-func createCategoryHandler(c *gin.Context) {
+func CreateCategoryHandler(c *gin.Context) {
 	var category models.Category
 	if err := c.ShouldBindJSON(&category); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -103,3 +103,22 @@ func DeleteBookRepository(id string) error {
 	}
 	return nil
 }
+
+func GetBooksByLanguageRepository(language string) ([]models.Book, error) {
+    var books []models.Book
+    result := db.Where("language = ?", language).Find(&books)
+    if result.Error != nil {
+        return nil, result.Error
+    }
+
+    if len(books) == 0 {
+        logrus.WithFields(logrus.Fields{
+            "module":   "book_repository",
+            "language": language,
+        }).Warn("No books found for the specified language")
+        return nil, fmt.Errorf("no books found for the specified language: %s", language)
+    }
+
+    return books, nil
+}
+

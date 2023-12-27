@@ -3,13 +3,24 @@ package service
 import (
 	"GoBookShelf/pkg/models"
 	"GoBookShelf/pkg/repository"
+
+	"github.com/sirupsen/logrus"
 )
 
 func GetAllBooksService() ([]models.Book, error) {
-	return repository.GetAllBooksRepository()
+	books, err := repository.GetAllBooksRepository()
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"service": "GetAllBooksService",
+			"error":   err.Error(),
+		}).Error("Error getting all books")
+	}
+	return books, err
+
 }
 
 func UpdateBookService(id string, book models.Book) error {
+
 	return repository.UpdateBookRepository(id, book)
 }
 
@@ -24,4 +35,7 @@ func GetBooksByCategoryIDService(categoryId int) ([]models.Book, error) {
 }
 func GetBookByIdService(bookId int) (models.Book, error) {
 	return repository.GetBookByIdRepository(bookId)
+}
+func GetBooksByLanguageService(language string) ([]models.Book, error) {
+	return repository.GetBooksByLanguageRepository(language)
 }
